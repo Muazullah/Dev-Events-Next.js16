@@ -1,16 +1,13 @@
 'use server';
 
 import { revalidatePath } from "next/cache";
-import { headers } from "next/headers";
 import Event, { IEvent } from "@/database/event.model";
 import connectDB from "@/lib/mongodb";
 
 export async function getAllEvents(): Promise<IEvent[]> {
     try {
-        await headers();
+        // Removed await headers() here so sitemap.xml can build successfully
         await connectDB();
-        // Limit to 100 to prevent memory overflow on the client. 
-        // For true infinite scaling, implement API pagination.
         const events = await Event.find()
             .sort({ createdAt: -1 })
             .limit(100)
@@ -24,7 +21,6 @@ export async function getAllEvents(): Promise<IEvent[]> {
 
 export async function getEventBySlug(slug: string): Promise<IEvent | null> {
     try {
-        await headers();
         await connectDB();
         const event = await Event.findOne({ slug: slug.trim().toLowerCase() }).lean() as IEvent | null;
         return event;
@@ -36,7 +32,6 @@ export async function getEventBySlug(slug: string): Promise<IEvent | null> {
 
 export async function getSimilarEventsBySlug(slug: string): Promise<IEvent[]> {
     try {
-        await headers();
         await connectDB();
         const currentEvent = await Event.findOne({ slug }).lean() as IEvent | null;
 
@@ -60,7 +55,6 @@ export async function getSimilarEventsBySlug(slug: string): Promise<IEvent[]> {
 
 export async function getEventBookingsCount(eventId: string): Promise<number> {
     try {
-        await headers();
         await connectDB();
         const event = await Event.findById(eventId).lean() as IEvent | null;
         return event?.bookingsCount || 0;
@@ -71,7 +65,6 @@ export async function getEventBookingsCount(eventId: string): Promise<number> {
 }
 
 export async function deleteEvent(slug: string) {
-    await headers();
     await connectDB();
     await Event.findOneAndDelete({ slug });
     revalidatePath("/");
