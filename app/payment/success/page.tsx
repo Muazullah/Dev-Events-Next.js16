@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { headers } from 'next/headers';
-import SuccessContent from '../../../components-temp/SuccessContent';
+import SuccessContent from '../../../components/SuccessContent';
 
 export default async function PaymentSuccessPage() {
     await headers();

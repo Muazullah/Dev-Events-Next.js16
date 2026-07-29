@@ -1,7 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import { isAdmin } from "@/lib/isAdmin";
 import { getEventBySlug } from "@/lib/actions/event.actions";
-import EditEventForm from "@/components-temp/EditEventForm";
+import EditEventForm from "@/components/EditEventForm";
 
 export default async function EditEventPage({ params }: { params: Promise<{ slug: string }> }) {
     const admin = await isAdmin();

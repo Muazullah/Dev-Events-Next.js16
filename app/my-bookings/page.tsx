@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import MyBookingsList from "@/components-temp/MyBookingsList";
+import MyBookingsList from "@/components/MyBookingsList";
 import { getMyBookings } from "@/lib/actions/booking.actions";
 import Link from "next/link";
 

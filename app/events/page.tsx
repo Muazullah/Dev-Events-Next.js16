@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import { headers } from "next/headers";
-import EventCard from "@/components-temp/EventCard";
-import SearchFilterBar from "../../components-temp/SearchFilterBar";
-import Pagination from "../../components-temp/Pagination";
+import EventCard from "@/components/EventCard";
+import SearchFilterBar from "../../components/SearchFilterBar";
+import Pagination from "../../components/Pagination";
 import { IEvent } from "@/database";
 import { getAllEvents } from "@/lib/actions/event.actions";
 

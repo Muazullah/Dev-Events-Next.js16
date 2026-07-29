@@ -3,11 +3,11 @@ import { Suspense } from "react";
 import { Schibsted_Grotesk, Martian_Mono, Geist } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import ParticleBackground from "@/components-temp/ParticleBackground.tsx";
+import ParticleBackground from "@/components/ParticleBackground.tsx";
 import NavbarWrapper from "./NavbarWrapper";
 import { PostHogProvider } from "./providers";
 import { ClerkProvider } from "@clerk/nextjs";
-import Footer from "@/components-temp/Footer";
+import Footer from "@/components/Footer";
 
 const geist = Geist({
   subsets: ["latin"],

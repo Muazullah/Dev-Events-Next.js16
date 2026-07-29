@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { isAdmin } from "@/lib/isAdmin";
-import CreateEventForm from "@/components-temp/CreateEventForm";
+import CreateEventForm from "@/components/CreateEventForm";
 
 export default async function CreateEventPage() {
     const admin = await isAdmin();
