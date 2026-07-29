@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { headers } from "next/headers";
-import EventCard from "@/components/EventCard";
-import ExploreBtn from "@/components/ExploreBtn";
+import EventCard from "@/components-temp/EventCard";
+import ExploreBtn from "@/components-temp/ExploreBtn";
 import { IEvent } from "@/database";
 import { getAllEvents } from "@/lib/actions/event.actions";
 import Link from "next/link";

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getEventBySlug, getSimilarEventsBySlug } from "@/lib/actions/event.actions";
-import EventContent from "@/components/EventContent";
+import EventContent from "@/components-temp/EventContent";
 
 
 

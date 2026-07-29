@@ -2,7 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import { getEventBySlug } from "@/lib/actions/event.actions";
-import PaymentForm from "../../../components/PaymentForm";
+import PaymentForm from "../../../components-temp/PaymentForm";
 
 export default async function PaymentPage({ params }: { params: Promise<{ slug: string }> }) {
     await headers();
