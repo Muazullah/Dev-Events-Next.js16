@@ -11,6 +11,7 @@ export default function CreateEventForm() {
     const [success, setSuccess] = useState('');
     const [isPaid, setIsPaid] = useState(false);
     const [currency, setCurrency] = useState('PKR');
+    const [mode, setMode] = useState('online'); // Added mode state
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -56,6 +57,7 @@ export default function CreateEventForm() {
             setSuccess('Event created successfully! Redirecting...');
             form.reset();
             setIsPaid(false);
+            setMode('online');
             setImagePreview(null);
 
             setTimeout(() => {
@@ -76,7 +78,6 @@ export default function CreateEventForm() {
 
     return (
         <section className="mt-20 max-w-3xl mx-auto px-4 pb-20">
-            {/* Header */}
             <div className="text-center mb-10">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-medium mb-4">
                     <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
@@ -86,7 +87,6 @@ export default function CreateEventForm() {
                 <p className="text-light-200/50 text-sm">Fill in the details below to publish a new developer event</p>
             </div>
 
-            {/* Alerts */}
             {error && (
                 <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-start gap-3 animate-fade-in">
                     <svg className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -111,17 +111,14 @@ export default function CreateEventForm() {
                         <span className="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-sm">📝</span>
                         Basic Information
                     </h2>
-
                     <div>
                         <label htmlFor="title" className={labelClass}>Title *</label>
                         <input type="text" id="title" name="title" required className={inputClass} placeholder="e.g. React Summit 2026" />
                     </div>
-
                     <div>
                         <label htmlFor="description" className={labelClass}>Description *</label>
                         <textarea id="description" name="description" required rows={4} className={inputClass} placeholder="Describe what this event is about..." />
                     </div>
-
                     <div>
                         <label htmlFor="overview" className={labelClass}>Overview *</label>
                         <textarea id="overview" name="overview" required rows={2} className={inputClass} placeholder="Short summary for cards and previews" />
@@ -134,15 +131,32 @@ export default function CreateEventForm() {
                         <span className="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-sm">📍</span>
                         Location & Time
                     </h2>
-
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
-                            <label htmlFor="venue" className={labelClass}>Venue *</label>
-                            <input type="text" id="venue" name="venue" required className={inputClass} placeholder="Convention Center" />
+                            <label htmlFor="venue" className={labelClass}>
+                                {mode === 'online' ? 'Platform *' : 'Venue *'}
+                            </label>
+                            <input
+                                type="text"
+                                id="venue"
+                                name="venue"
+                                required
+                                className={inputClass}
+                                placeholder={mode === 'online' ? 'Zoom, Google Meet, Discord' : 'Convention Center'}
+                            />
                         </div>
                         <div>
-                            <label htmlFor="location" className={labelClass}>Location *</label>
-                            <input type="text" id="location" name="location" required className={inputClass} placeholder="San Francisco, CA" />
+                            <label htmlFor="location" className={labelClass}>
+                                {mode === 'online' ? 'Meeting Link *' : 'Location *'}
+                            </label>
+                            <input
+                                type="text"
+                                id="location"
+                                name="location"
+                                required
+                                className={inputClass}
+                                placeholder={mode === 'online' ? 'https://meet.google.com/...' : 'San Francisco, CA'}
+                            />
                         </div>
                         <div>
                             <label htmlFor="date" className={labelClass}>Date *</label>
@@ -161,11 +175,17 @@ export default function CreateEventForm() {
                         <span className="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center text-sm">⚙️</span>
                         Event Details
                     </h2>
-
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label htmlFor="mode" className={labelClass}>Mode *</label>
-                            <select id="mode" name="mode" required className={`${inputClass} appearance-none cursor-pointer`}>
+                            <select
+                                id="mode"
+                                name="mode"
+                                required
+                                className={`${inputClass} appearance-none cursor-pointer`}
+                                value={mode}
+                                onChange={(e) => setMode(e.target.value)}
+                            >
                                 <option value="online" className="bg-dark-200">Online</option>
                                 <option value="offline" className="bg-dark-200">Offline</option>
                                 <option value="hybrid" className="bg-dark-200">Hybrid</option>
@@ -245,7 +265,6 @@ export default function CreateEventForm() {
                         <span className="w-8 h-8 rounded-lg bg-pink-500/10 text-pink-400 flex items-center justify-center text-sm">🖼️</span>
                         Event Image
                     </h2>
-
                     <div
                         className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300 cursor-pointer hover:border-indigo-500/30 ${imagePreview ? 'border-indigo-500/30' : 'border-white/[0.08]'}`}
                         onClick={() => fileInputRef.current?.click()}
@@ -287,13 +306,11 @@ export default function CreateEventForm() {
                         <span className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-sm">🏷️</span>
                         Tags & Agenda
                     </h2>
-
                     <div>
                         <label htmlFor="tags" className={labelClass}>Tags (comma separated) *</label>
                         <input type="text" id="tags" name="tags" placeholder="React, Next.js, Web Development" required className={inputClass} />
                         <p className="text-light-200/30 text-xs mt-1.5">Separate tags with commas</p>
                     </div>
-
                     <div>
                         <label htmlFor="agenda" className={labelClass}>Agenda Items (comma separated) *</label>
                         <input type="text" id="agenda" name="agenda" placeholder="Opening Keynote, Lunch Break, Closing Remarks" required className={inputClass} />
@@ -301,7 +318,6 @@ export default function CreateEventForm() {
                     </div>
                 </div>
 
-                {/* Submit */}
                 <button
                     type="submit"
                     disabled={isLoading}

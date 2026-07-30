@@ -56,13 +56,13 @@ const EventSchema = new Schema<IEvent>(
     },
     venue: {
       type: String,
-      required: [true, 'Venue is required'],
       trim: true,
+      // Removed required constraint to allow online events to skip it
     },
     location: {
       type: String,
-      required: [true, 'Location is required'],
       trim: true,
+      // Removed required constraint to allow online events to skip it
     },
     date: {
       type: String,
@@ -134,7 +134,6 @@ const EventSchema = new Schema<IEvent>(
   { timestamps: true }
 );
 
-// Only normalize date and time. Slug is generated in the API route to prevent collisions.
 EventSchema.pre('save', function (next) {
   const event = this as IEvent;
 

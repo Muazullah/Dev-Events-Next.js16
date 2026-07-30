@@ -89,8 +89,8 @@ export default async function EventContent({
             <div className="header">
                 <div className="flex items-center gap-3 mb-4">
                     <span className={`text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider ${event.mode === 'online' ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20' :
-                            event.mode === 'hybrid' ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' :
-                                'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                        event.mode === 'hybrid' ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' :
+                            'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
                         }`}>
                         {event.mode}
                     </span>
@@ -138,10 +138,16 @@ export default async function EventContent({
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <EventDetailItem icon="/icons/calendar.svg" label={event.date} color="indigo" />
                             <EventDetailItem icon="/icons/clock.svg" label={event.time} color="cyan" />
-                            <EventDetailItem icon="/icons/pin.svg" label={event.location} color="purple" />
-                            <EventDetailItem icon="/icons/mode.svg" label={event.mode} color="emerald" />
-                            <EventDetailItem icon="/icons/audience.svg" label={event.audience} color="indigo" />
-                            <EventDetailItem icon="/icons/venue.svg" label={event.venue} color="cyan" />
+
+                            {/* Conditionally render location/venue if they exist */}
+                            {event.location && (
+                                <EventDetailItem icon="/icons/pin.svg" label={event.location} color="purple" />
+                            )}
+                            {event.venue && (
+                                <EventDetailItem icon="/icons/venue.svg" label={event.venue} color="emerald" />
+                            )}
+                            <EventDetailItem icon="/icons/mode.svg" label={event.mode} color="indigo" />
+                            <EventDetailItem icon="/icons/audience.svg" label={event.audience} color="cyan" />
                         </div>
                     </section>
 
@@ -229,7 +235,7 @@ export default async function EventContent({
                             <AddToCalendar
                                 title={event.title}
                                 description={event.description}
-                                location={event.location}
+                                location={event.location || event.venue}
                                 date={event.date}
                                 time={event.time}
                                 slug={event.slug}

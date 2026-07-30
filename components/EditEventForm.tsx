@@ -12,6 +12,7 @@ export default function EditEventForm({ event }: { event: IEvent }) {
     const [success, setSuccess] = useState('');
     const [isPaid, setIsPaid] = useState(event.isPaid || false);
     const [currency, setCurrency] = useState(event.currency || 'PKR');
+    const [mode, setMode] = useState(event.mode || 'online'); // Added mode state
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -100,17 +101,14 @@ export default function EditEventForm({ event }: { event: IEvent }) {
                         <span className="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-sm">📝</span>
                         Basic Information
                     </h2>
-
                     <div>
                         <label htmlFor="title" className={labelClass}>Title *</label>
                         <input type="text" id="title" name="title" defaultValue={event.title} required className={inputClass} />
                     </div>
-
                     <div>
                         <label htmlFor="description" className={labelClass}>Description *</label>
                         <textarea id="description" name="description" defaultValue={event.description} required rows={4} className={inputClass} />
                     </div>
-
                     <div>
                         <label htmlFor="overview" className={labelClass}>Overview *</label>
                         <textarea id="overview" name="overview" defaultValue={event.overview} required rows={2} className={inputClass} />
@@ -123,15 +121,34 @@ export default function EditEventForm({ event }: { event: IEvent }) {
                         <span className="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-sm">📍</span>
                         Location & Time
                     </h2>
-
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
-                            <label htmlFor="venue" className={labelClass}>Venue *</label>
-                            <input type="text" id="venue" name="venue" defaultValue={event.venue} required className={inputClass} />
+                            <label htmlFor="venue" className={labelClass}>
+                                {mode === 'online' ? 'Platform *' : 'Venue *'}
+                            </label>
+                            <input
+                                type="text"
+                                id="venue"
+                                name="venue"
+                                defaultValue={event.venue}
+                                required
+                                className={inputClass}
+                                placeholder={mode === 'online' ? 'Zoom, Google Meet, Discord' : 'Convention Center'}
+                            />
                         </div>
                         <div>
-                            <label htmlFor="location" className={labelClass}>Location *</label>
-                            <input type="text" id="location" name="location" defaultValue={event.location} required className={inputClass} />
+                            <label htmlFor="location" className={labelClass}>
+                                {mode === 'online' ? 'Meeting Link *' : 'Location *'}
+                            </label>
+                            <input
+                                type="text"
+                                id="location"
+                                name="location"
+                                defaultValue={event.location}
+                                required
+                                className={inputClass}
+                                placeholder={mode === 'online' ? 'https://meet.google.com/...' : 'San Francisco, CA'}
+                            />
                         </div>
                         <div>
                             <label htmlFor="date" className={labelClass}>Date *</label>
@@ -150,11 +167,18 @@ export default function EditEventForm({ event }: { event: IEvent }) {
                         <span className="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center text-sm">⚙️</span>
                         Event Details
                     </h2>
-
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label htmlFor="mode" className={labelClass}>Mode *</label>
-                            <select id="mode" name="mode" defaultValue={event.mode} required className={`${inputClass} appearance-none cursor-pointer`}>
+                            <select
+                                id="mode"
+                                name="mode"
+                                defaultValue={event.mode}
+                                required
+                                className={`${inputClass} appearance-none cursor-pointer`}
+                                value={mode}
+                                onChange={(e) => setMode(e.target.value)}
+                            >
                                 <option value="online" className="bg-dark-200">Online</option>
                                 <option value="offline" className="bg-dark-200">Offline</option>
                                 <option value="hybrid" className="bg-dark-200">Hybrid</option>
@@ -235,7 +259,6 @@ export default function EditEventForm({ event }: { event: IEvent }) {
                         <span className="w-8 h-8 rounded-lg bg-pink-500/10 text-pink-400 flex items-center justify-center text-sm">🖼️</span>
                         Event Image
                     </h2>
-
                     <div
                         className={`relative border-2 border-dashed rounded-xl p-6 text-center transition-all duration-300 cursor-pointer hover:border-indigo-500/30 ${imagePreview ? 'border-indigo-500/30' : 'border-white/[0.08]'}`}
                         onClick={() => fileInputRef.current?.click()}
@@ -274,12 +297,10 @@ export default function EditEventForm({ event }: { event: IEvent }) {
                         <span className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-sm">🏷️</span>
                         Tags & Agenda
                     </h2>
-
                     <div>
                         <label htmlFor="tags" className={labelClass}>Tags (comma separated) *</label>
                         <input type="text" id="tags" name="tags" defaultValue={event.tags?.join(', ')} placeholder="React, Next.js, Web" required className={inputClass} />
                     </div>
-
                     <div>
                         <label htmlFor="agenda" className={labelClass}>Agenda Items (comma separated) *</label>
                         <input type="text" id="agenda" name="agenda" defaultValue={event.agenda?.join(', ')} placeholder="Opening Keynote, Lunch, Closing remarks" required className={inputClass} />
