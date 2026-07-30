@@ -11,6 +11,7 @@ export default function EditEventForm({ event }: { event: IEvent }) {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [isPaid, setIsPaid] = useState(event.isPaid || false);
+    const [currency, setCurrency] = useState(event.currency || 'PKR');
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -181,12 +182,13 @@ export default function EditEventForm({ event }: { event: IEvent }) {
                             type="button"
                             onClick={() => setIsPaid(!isPaid)}
                             className={`relative w-12 h-6 rounded-full transition-colors duration-300 ${isPaid ? 'bg-indigo-500' : 'bg-white/10'}`}
+                            aria-label="Toggle Paid Event"
                         >
                             <span className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform duration-300 ${isPaid ? 'translate-x-7' : 'translate-x-1'}`} />
                         </button>
-                        <label htmlFor="isPaid" className="text-sm font-medium text-white cursor-pointer" onClick={() => setIsPaid(!isPaid)}>
+                        <span className="text-sm font-medium text-white cursor-pointer" onClick={() => setIsPaid(!isPaid)}>
                             This is a Paid Event
-                        </label>
+                        </span>
                     </div>
 
                     {isPaid && (
@@ -194,7 +196,9 @@ export default function EditEventForm({ event }: { event: IEvent }) {
                             <div>
                                 <label htmlFor="price" className={labelClass}>Price *</label>
                                 <div className="relative">
-                                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-light-200/40 text-sm">$</span>
+                                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-light-200/40 text-sm font-bold">
+                                        {currency === 'PKR' ? 'Rs ' : '$ '}
+                                    </span>
                                     <input
                                         type="number"
                                         id="price"
@@ -202,13 +206,21 @@ export default function EditEventForm({ event }: { event: IEvent }) {
                                         defaultValue={event.price || 0}
                                         min="1"
                                         required={isPaid}
-                                        className={`${inputClass} pl-8`}
+                                        className={`${inputClass} pl-12`}
                                     />
                                 </div>
                             </div>
                             <div>
                                 <label htmlFor="currency" className={labelClass}>Currency *</label>
-                                <select id="currency" name="currency" defaultValue={event.currency || 'PKR'} required={isPaid} className={`${inputClass} appearance-none cursor-pointer`}>
+                                <select
+                                    id="currency"
+                                    name="currency"
+                                    defaultValue={event.currency || 'PKR'}
+                                    required={isPaid}
+                                    className={`${inputClass} appearance-none cursor-pointer`}
+                                    value={currency}
+                                    onChange={(e) => setCurrency(e.target.value)}
+                                >
                                     <option value="PKR" className="bg-dark-200">PKR (Pakistani Rupee)</option>
                                     <option value="USD" className="bg-dark-200">USD (US Dollar)</option>
                                 </select>
