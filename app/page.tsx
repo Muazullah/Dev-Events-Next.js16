@@ -8,8 +8,8 @@ import Link from "next/link";
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"),
-  title: "Dev Events — Discover Developer Events",
-  description: "The hub for every dev event you mustn't miss",
+  title: "EventNode — Discover Events",
+  description: "The hub for every event you mustn't miss",
 };
 
 async function EventsGrid() {

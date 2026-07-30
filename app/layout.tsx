@@ -25,8 +25,8 @@ const martianMono = Martian_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dev Events — Discover Developer Events",
-  description: "The hub for every dev event you mustn't miss",
+  title: "EventNode — Discover Developer Events",
+  description: "The hub for every event you mustn't miss",
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"),
 };
 
@@ -63,7 +63,8 @@ export default function RootLayout({
                 <header className="glass sticky top-0 z-50">
                   <nav className="flex items-center justify-between mx-auto container sm:px-10 px-5 py-4">
                     <div className="flex items-center gap-2 opacity-50">
-                      <span className="text-xl font-bold italic text-white">Dev Events</span>
+                      {/* Changed from Dev Events to EventNode */}
+                      <span className="text-xl font-bold italic text-white">EventNode</span>
                     </div>
                   </nav>
                 </header>

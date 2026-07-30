@@ -66,10 +66,10 @@ export default function Navbar({ isAdmin }: { isAdmin: boolean }) {
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2.5 group" onClick={closeMenu}>
                     <div className="relative w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <span className="text-white text-xs font-bold">DE</span>
+                        <span className="text-white text-xs font-bold">DN</span>
                     </div>
                     <p className="text-xl font-bold italic max-sm:hidden text-white group-hover:text-indigo-400 transition-colors">
-                        Dev Events
+                        EventNode
                     </p>
                 </Link>
 
