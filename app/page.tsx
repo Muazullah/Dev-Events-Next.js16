@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import EventCard from "@/components/EventCard";
 import ExploreBtn from "@/components/ExploreBtn";
 import { IEvent } from "@/database";
-import { getAllEvents } from "@/lib/actions/event.actions";
+import { getFeaturedEvents } from "@/lib/actions/event.actions";
 import Link from "next/link";
 
 export const metadata = {
@@ -14,7 +14,7 @@ export const metadata = {
 
 async function EventsGrid() {
   await headers();
-  const events = await getAllEvents();
+  const events = await getFeaturedEvents();
 
   if (!events || events.length === 0) {
     return (
